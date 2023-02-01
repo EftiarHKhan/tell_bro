@@ -8,6 +8,7 @@ const Color darkGreyClr = Colors.grey;
 
 class Themes{
   static final light = ThemeData(
+    backgroundColor: Colors.white,
     primaryColor: primaryClr,
     brightness: Brightness.light
   );

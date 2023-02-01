@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   }
   _appBar(){
     return AppBar(
+      backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: (){
           ThemeServices().switchTheme();
@@ -53,7 +54,12 @@ class _HomePageState extends State<HomePage> {
           size: 20,),
       ),
       actions: [
-        Icon(Icons.person, size: 20,),
+        //Icon(Icons.person, size: 20,),
+        CircleAvatar(
+          backgroundImage: AssetImage(
+            "images/profile.png"
+          ),
+        )
       ],
     );
   }

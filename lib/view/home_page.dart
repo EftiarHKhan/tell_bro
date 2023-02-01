@@ -36,25 +36,28 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
+  _appBar(){
+    return AppBar(
+      leading: GestureDetector(
+        onTap: (){
+          ThemeServices().switchTheme();
 
+          notifyHelper.displayNotification(
+              title: "Theme changed",
+              body: Get.isDarkMode?"Activated Light Theme":"Activated Dark Theme"
+          );
 
-_appBar(){
-  return AppBar(
-    leading: GestureDetector(
-      onTap: (){
-        ThemeServices().switchTheme();
-        var notifyHelper;
-        notifyHelper.displayNotification(
-          title: "Theme changed",
-          body: Get.isDarkMode?"Activated Dark Theme":"Activated Light Theme"
-        );
-      },
-      child: Icon(Icons.nightlight_round,
+          notifyHelper.scheduledNotification();
+        },
+        child: Icon(Icons.nightlight_round,
           size: 20,),
-    ),
-    actions: [
-      Icon(Icons.person, size: 20,),
-    ],
-  );
+      ),
+      actions: [
+        Icon(Icons.person, size: 20,),
+      ],
+    );
+  }
 }
+
+
+

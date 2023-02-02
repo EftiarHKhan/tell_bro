@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:tell_bro/model/button.dart';
 import 'package:tell_bro/model/notification_services.dart';
 import 'package:tell_bro/model/theme_services.dart';
+import 'package:tell_bro/view/add_task.dart';
 
 import '../model/theme.dart';
 
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  DateTime _selectedDate = DateTime.now();
   var notifyHelper;
   @override
   void initState(){
@@ -36,44 +38,50 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           _addTaskBar(),
-          Container(
-            margin: const EdgeInsets.only(top: 20, left: 20),
-            child: DatePicker(
-              DateTime.now(),
-              height: 100,
-              width: 80,
-              initialSelectedDate: DateTime.now(),
-              selectionColor: primaryClr,
-              selectedTextColor: Colors.white,
-              dateTextStyle: GoogleFonts.lato(
-                textStyle: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey
-                ),
-              ),
-              dayTextStyle: GoogleFonts.lato(
-                textStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey
-                ),
-              ),
-              monthTextStyle: GoogleFonts.lato(
-                textStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey
-                ),
-              ),
-            ),
-          )
+          _addDateBar(),
 
         ],
       ),
     );
   }
 
+  _addDateBar(){
+    return Container(
+      margin: const EdgeInsets.only(top: 20, left: 20),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100,
+        width: 80,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: primaryClr,
+        selectedTextColor: Colors.white,
+        dateTextStyle: GoogleFonts.lato(
+          textStyle: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey
+          ),
+        ),
+        dayTextStyle: GoogleFonts.lato(
+          textStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey
+          ),
+        ),
+        monthTextStyle: GoogleFonts.lato(
+          textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey
+          ),
+        ),
+        onDateChange: (date){
+          _selectedDate = date;
+        },
+      ),
+    );
+  }
   _addTaskBar(){
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20,top: 10),
@@ -94,7 +102,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label: "+ Add Task", onTap: ()=>null)
+          MyButton(label: "+ Add Task", onTap: ()=>Get.to(AddTaskPage()))
         ],
       ),
     );

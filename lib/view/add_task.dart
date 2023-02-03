@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +15,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
   String _endTime = "9:30 PM";
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
+  int _selectedRemind = 5;
+  List<int> remindList = [
+    5,
+    10,
+    15,
+    20,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +38,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Text",
                 style: HeadingStyle,
               ),
-              MyInputField(title: "Title", hint: "Enter your title"),
-              MyInputField(title: "Note", hint: "Tell Bro"),
+              const MyInputField(title: "Title", hint: "Enter your title"),
+              const MyInputField(title: "Note", hint: "Tell Bro"),
               MyInputField(title: "Date", hint: DateFormat.yMd().format(_selectedDate),
               widget: IconButton(
-                icon: Icon(Icons.calendar_today_outlined,
+                icon: const Icon(Icons.calendar_today_outlined,
                     color: Colors.grey
                 ),
                 onPressed: () {
@@ -54,13 +61,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           onPressed: (){
                             _getTimeFromUser(isStartTime:true);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.access_time_outlined,
                             color: Colors.grey,
                           ),
                         ),
                       )),
-                  SizedBox(width: 12,),
+                  const SizedBox(width: 12,),
                   Expanded(
                       child: MyInputField(
                         title: "End date",
@@ -69,14 +76,38 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           onPressed: (){
                             _getTimeFromUser(isStartTime:false);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.access_time_outlined,
                             color: Colors.grey,
                           ),
                         ),
                       )),
                 ],
-              )
+              ),
+              MyInputField(title: "Remind", hint: "$_selectedRemind minutes early",
+                widget: DropdownButton(
+                  icon: Icon(Icons.keyboard_arrow_down,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 32,
+                  elevation: 4,
+                  underline: Container(height: 0,),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedRemind = int.parse(newValue!);
+                    });
+                  },
+                  style: subTitleStyle,
+                  items: remindList.map<DropdownMenuItem<String>>((int value){
+                    return DropdownMenuItem<String>(
+                      value: value.toString(),
+                      child: Text(value.toString()),
+                    );
+                  }
+                  ).toList(),
+                ),
+              ),
+
 
 
             ],
@@ -99,7 +130,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
             color:Get.isDarkMode ? Colors.white:Colors.black
         ),
       ),
-      actions: [
+      actions: const [
         //Icon(Icons.person, size: 20,),
         CircleAvatar(
           backgroundImage: AssetImage(
@@ -128,22 +159,31 @@ class _AddTaskPageState extends State<AddTaskPage> {
     }
   }
 
-  _getTimeFromUser({required bool isStartTime}){
-    var pickedTime = _showTimePicker();
+  _getTimeFromUser({required bool isStartTime}) async {
+    var pickedTime = await _showTimePicker();
     String _formatedTime = pickedTime.format(context);
     if(pickedTime == null){
       print("Time canceled");
     }else if(isStartTime == true){
-      _startTime = _formatedTime;
+      setState(() {
+        _startTime = _formatedTime;
+      });
     }else if(isStartTime == false){
-      _endTime = _formatedTime;
+      setState(() {
+        _endTime = _formatedTime;
+      });
     }
   }
 
   _showTimePicker(){
-    var _pickedTime = showTimePicker(
+    return showTimePicker(
       initialEntryMode: TimePickerEntryMode.input,
         context: context,
-        initialTime: TimeOfDay(hour: 9, minute: 10));
+        initialTime: TimeOfDay(
+            hour: int.parse(_startTime.split(":")[0]),
+            minute: int.parse(_startTime.split(":")[1].split(" ")[0]),
+        ),
+        );
+
   }
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:tell_bro/controller/task_controller.dart';
 import 'package:tell_bro/model/button.dart';
 import 'package:tell_bro/model/notification_services.dart';
 import 'package:tell_bro/model/theme_services.dart';
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final _taskController = Get.put(TaskController());
   DateTime _selectedDate = DateTime.now();
   var notifyHelper;
   @override
@@ -40,6 +42,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          _showTasks(),
 
         ],
       ),
@@ -103,7 +106,11 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label: "+ Add Task", onTap: ()=>Get.to(AddTaskPage()))
+          MyButton(label: "+ Add Task", onTap: () async {
+            await Get.to(()=>AddTaskPage());
+            _taskController.getTasks();
+          }
+          ),
         ],
       ),
     );
@@ -137,6 +144,24 @@ class _HomePageState extends State<HomePage> {
         )
       ],
     );
+  }
+  _showTasks(){
+    return Expanded(
+      child: Obx((){
+        return ListView.builder(
+            itemCount: _taskController.taskList.length,
+
+            itemBuilder: (_, context) {
+              return Container(
+                width: 100,
+                height: 50,
+                color: Colors.green,
+                margin: const EdgeInsets.only(bottom: 10),
+              );
+          });
+        })
+      );
+
   }
 }
 

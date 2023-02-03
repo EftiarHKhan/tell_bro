@@ -40,6 +40,7 @@ dependencies:
   get: ^4.6.5
   flutter_local_notifications: ^9.6.0
   flutter_native_timezone: ^2.0.0
+  sqflite: 
   intl:
   google_fonts:
   date_picker_timeline:

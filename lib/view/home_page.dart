@@ -152,6 +152,7 @@ class _HomePageState extends State<HomePage> {
             itemCount: _taskController.taskList.length,
 
             itemBuilder: (_, context) {
+              print(_taskController.taskList.length);
               return Container(
                 width: 100,
                 height: 50,

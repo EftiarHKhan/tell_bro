@@ -1,8 +1,6 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:tell_bro/controller/task_controller.dart';
@@ -42,6 +40,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          SizedBox(height:10),
           _showTasks(),
 
         ],
@@ -151,13 +150,22 @@ class _HomePageState extends State<HomePage> {
         return ListView.builder(
             itemCount: _taskController.taskList.length,
 
-            itemBuilder: (_, context) {
-              print(_taskController.taskList.length);
-              return Container(
-                width: 100,
-                height: 50,
-                color: Colors.green,
-                margin: const EdgeInsets.only(bottom: 10),
+            itemBuilder: (_, index) {
+
+              return GestureDetector(
+                onTap:(){
+                  _taskController.delete(_taskController.taskList[index]);
+                  _taskController.getTasks();
+                  },
+                child: Container(
+                  width: 100,
+                  height: 50,
+                  color: Colors.green,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    _taskController.taskList[index].title.toString()
+                  ),
+                ),
               );
           });
         })

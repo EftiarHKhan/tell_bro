@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:tell_bro/controller/db_helper.dart';
 import 'package:tell_bro/model/theme_services.dart';
 import 'package:tell_bro/view/home_page.dart';
+import 'package:tell_bro/view/splash_screen.dart';
 
 import 'model/theme.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeServices().theme,
-      home: const HomePage(),
+      home: const SplashScreen(),
     );
   }
 }

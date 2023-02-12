@@ -31,10 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
         title: Text('Tell Bro'),
       ),
       body: Container(
-        color: Colors.white,
-        child: Text(
-          "Hey Bro",
-          style: TextStyle(fontSize: 30),
+        //color: Colors.orange,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset('images/Tell_Bro.jpg',
+              width: 500,
+              height: 600,
+              fit: BoxFit.fill,
+            ),
+          ],
         ),
 
       ),

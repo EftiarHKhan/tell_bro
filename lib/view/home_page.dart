@@ -1,5 +1,6 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,8 @@ import 'package:tell_bro/model/notification_services.dart';
 import 'package:tell_bro/model/theme_services.dart';
 import 'package:tell_bro/view/add_task.dart';
 
+import '../model/task.dart';
+import '../model/task_tile.dart';
 import '../model/theme.dart';
 
 class HomePage extends StatefulWidget {
@@ -144,6 +147,17 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
+  _showBottomSheet(BuildContext context, Task task){
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top: 4),
+        height: task.isCompleted==1?
+          MediaQuery.of(context).size.height*0.24:
+          MediaQuery.of(context).size.height*0.32
+
+      )
+    );
+  }
   _showTasks(){
     return Expanded(
       child: Obx((){
@@ -152,21 +166,38 @@ class _HomePageState extends State<HomePage> {
 
             itemBuilder: (_, index) {
 
-              return GestureDetector(
-                onTap:(){
-                  _taskController.delete(_taskController.taskList[index]);
-                  _taskController.getTasks();
-                  },
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  color: Colors.green,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    _taskController.taskList[index].title.toString()
-                  ),
-                ),
-              );
+              return AnimationConfiguration.staggeredList(
+                  position: index,
+                  child: SlideAnimation(
+                    child: FadeInAnimation(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              _showBottomSheet(context, _taskController.taskList[index]);
+                            },
+                            child: TaskTile(_taskController.taskList[index]),
+                          )
+                        ],
+                      ),
+                    ),
+                  ));
+
+              // return GestureDetector(
+              //   onTap:(){
+              //     _taskController.delete(_taskController.taskList[index]);
+              //     _taskController.getTasks();
+              //     },
+              //   child: Container(
+              //     width: 100,
+              //     height: 50,
+              //     color: Colors.green,
+              //     margin: const EdgeInsets.only(bottom: 10),
+              //     child: Text(
+              //       _taskController.taskList[index].title.toString()
+              //     ),
+              //   ),
+              // );
           });
         })
       );

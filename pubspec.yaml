@@ -41,6 +41,7 @@ dependencies:
   flutter_local_notifications: ^9.6.0
   flutter_native_timezone: ^2.0.0
   query: ^2.1.0
+  flutter_staggered_animations:
   sqflite: 
   intl:
   google_fonts:

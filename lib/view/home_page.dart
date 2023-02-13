@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
           MyButton(label: "+ Add Task", onTap: () async {
             await Get.to(()=>AddTaskPage());
             _taskController.getTasks();
-          }
+          },
           ),
         ],
       ),
@@ -152,8 +152,8 @@ class _HomePageState extends State<HomePage> {
       Container(
         padding: const EdgeInsets.only(top: 4),
         height: task.isCompleted==1?
-          MediaQuery.of(context).size.height*0.24:
-          MediaQuery.of(context).size.height*0.32,
+          MediaQuery.of(context).size.height*0.28:
+          MediaQuery.of(context).size.height*0.36,
           color: Get.isDarkMode?darkGreyClr:Colors.white,
         child: Column(
           children: [
@@ -165,16 +165,40 @@ class _HomePageState extends State<HomePage> {
                 color: Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
               ),
             ),
+            Spacer(),
             task.isCompleted ==1
             ?Container()
                 :_bottomSheetButton(
               label:"Task Completed",
               onTap: (){
+                _taskController.markTaskCompleted(task.id!);
                 Get.back();
               },
               clr: primaryClr,
               context: context,
-            )
+            ),
+
+            _bottomSheetButton(
+              label:"Delete Task",
+              onTap: (){
+                _taskController.delete(task);
+
+                Get.back();
+              },
+              clr: Colors.red[300]!,
+              context: context,
+            ),
+            SizedBox(height: 20,),
+            _bottomSheetButton(
+              label:"Close",
+              onTap: (){
+                Get.back();
+              },
+              clr: Colors.red[300]!,
+              isClose:true,
+              context: context,
+            ),
+            SizedBox(height: 10,)
           ],
         ),
 
@@ -198,10 +222,17 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: isClose==true?Colors.red:clr
+            color: isClose==true?Get.isDarkMode?Colors.grey[600]!:Colors.grey[300]!:clr
           ),
           borderRadius: BorderRadius.circular(20),
-          color: isClose==true?Colors.red:clr,
+          color: isClose==true?Colors.transparent:clr,
+        ),
+
+        child: Center(
+          child: Text(
+            label,
+            style: isClose?titleStyle:titleStyle.copyWith(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -231,21 +262,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ));
 
-              // return GestureDetector(
-              //   onTap:(){
-              //     _taskController.delete(_taskController.taskList[index]);
-              //     _taskController.getTasks();
-              //     },
-              //   child: Container(
-              //     width: 100,
-              //     height: 50,
-              //     color: Colors.green,
-              //     margin: const EdgeInsets.only(bottom: 10),
-              //     child: Text(
-              //       _taskController.taskList[index].title.toString()
-              //     ),
-              //   ),
-              // );
+
           });
         })
       );

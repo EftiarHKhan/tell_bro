@@ -141,11 +141,12 @@ class _HomePageState extends State<HomePage> {
       ),
       actions: [
         //Icon(Icons.person, size: 20,),
-        CircleAvatar(
-          backgroundImage: AssetImage(
-            "images/profile.png"
-          ),
-        )
+        // CircleAvatar(
+        //   backgroundImage: AssetImage(
+        //     "images/profile.png"
+        //   ),
+        // )
+
       ],
     );
   }

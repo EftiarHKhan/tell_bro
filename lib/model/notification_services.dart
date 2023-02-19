@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:tell_bro/model/task.dart';
+import 'package:tell_bro/view/notified_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -51,7 +52,7 @@ class NotifyHelper{
       title,
       body,
       platformChannelSpecifics,
-      payload: 'Default_Sound',
+      payload: title,
     );
   }
 
@@ -69,7 +70,8 @@ class NotifyHelper{
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time
+        matchDateTimeComponents: DateTimeComponents.time,
+        payload: "${task.title}|"+"${task.note}|"
     );
 
   }
@@ -109,7 +111,13 @@ class NotifyHelper{
     } else {
       print("Notification Done");
     }
-    Get.to(()=>Container(color: Colors.white,));
+
+    if(payload=="Theme changed"){
+      print("Nothing navigate");
+    }
+    else{
+      Get.to(()=>NotifiedPage(label:payload));
+    }
   }
 
   Future onDidReceiveLocalNotification(

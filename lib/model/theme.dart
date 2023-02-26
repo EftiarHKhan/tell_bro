@@ -7,6 +7,7 @@ const Color pinkClr = Color(0xFFff4667);
 const Color white = Colors.white;
 const primaryClr = orangeClr;
 const Color darkGreyClr = Colors.grey;
+const Color blackClr = Colors.black;
 
 class Themes{
   static final light = ThemeData(
@@ -16,6 +17,7 @@ class Themes{
   );
 
   static final dark = ThemeData(
+    backgroundColor: Colors.black,
     primaryColor: darkGreyClr,
     brightness: Brightness.dark
   );

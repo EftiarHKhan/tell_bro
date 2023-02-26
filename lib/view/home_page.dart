@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
-          SizedBox(height:10),
+          const SizedBox(height:10),
           _showTasks(),
 
         ],
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
               clr: Colors.red[300]!,
               context: context,
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             _bottomSheetButton(
               label:"Close",
               onTap: (){
@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
               isClose:true,
               context: context,
             ),
-            SizedBox(height: 10,)
+            const SizedBox(height: 10,)
           ],
         ),
 
@@ -247,6 +247,7 @@ class _HomePageState extends State<HomePage> {
             itemCount: _taskController.taskList.length,
 
             itemBuilder: (_, index) {
+
 
               Task task = _taskController.taskList[index];
 

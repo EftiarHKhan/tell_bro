@@ -69,7 +69,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 children: [
                   Expanded(
                       child: MyInputField(
-                        title: "Start date",
+                        title: "Start time",
                         hint: _startTime,
                         widget: IconButton(
                           onPressed: (){
@@ -84,7 +84,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   const SizedBox(width: 12,),
                   Expanded(
                       child: MyInputField(
-                        title: "End date",
+                        title: "End time",
                         hint: _endTime,
                         widget: IconButton(
                           onPressed: (){
@@ -243,7 +243,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.white,
         colorText: primaryClr,
-        icon: Icon(Icons.warning_amber_rounded,
+        icon: const Icon(Icons.warning_amber_rounded,
           color: Colors.red,
         ),
 
@@ -265,7 +265,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           isCompleted: 0,
         )
     );
-    print("My is is"+"$value");
+
   }
   _colorPallete(){
     return Column(

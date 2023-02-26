@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 import 'package:tell_bro/controller/task_controller.dart';
 import 'package:tell_bro/model/button.dart';
@@ -144,10 +145,25 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
+        
+        IconButton(
+            onPressed: (){
+              Share.share('https://play.google.com/store/apps/dev?id=5551015295329500291',subject: 'Share');
+              },
+            icon: Icon(Icons.share, color: Get.isDarkMode ? Colors.white:Colors.black,),
+        ),
+
         PopupMenuButton(
           icon: Icon(Icons.menu, color: Get.isDarkMode ? Colors.white:Colors.black,),
           color: Get.isDarkMode ? Colors.white:Colors.grey[600],
           itemBuilder: (context) => [
+            // PopupMenuItem<int>(
+            //   value: 0,
+            //   child: Text(
+            //     "More App",
+            //     style: TextStyle(color: Get.isDarkMode ? Colors.black:Colors.white),
+            //   ),
+            // ),
             PopupMenuItem<int>(
               value: 0,
                 child: Text(
@@ -155,6 +171,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(color: Get.isDarkMode ? Colors.black:Colors.white),
                 ),
             ),
+            // PopupMenuItem(child: child)
           ],
           onSelected: (item) => {Get.snackbar("Developer:", "Md Eftiar Haider Khan",
           snackPosition: SnackPosition.BOTTOM,

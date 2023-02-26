@@ -47,10 +47,18 @@ dependencies:
   google_fonts:
   date_picker_timeline:
   sliding_clipped_nav_bar:
+  share_plus: ^6.3.1
+  flutter_launcher_icons: ^0.12.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  image_path: "images/profile.png"
+  android: true
+  ios: true
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

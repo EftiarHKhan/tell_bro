@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 import 'package:tell_bro/controller/task_controller.dart';
 import 'package:tell_bro/model/button.dart';
 import 'package:tell_bro/model/notification_services.dart';
@@ -42,8 +43,8 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           _addTaskBar(),
-          _addDateBar(),
-          const SizedBox(height:10),
+          //_addDateBar(),
+          const SizedBox(height:15),
           _showTasks(),
 
         ],
@@ -119,6 +120,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+
+
   _appBar(){
     return AppBar(
       elevation: 0,
@@ -140,12 +144,28 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       actions: [
-        //Icon(Icons.person, size: 20,),
-        // CircleAvatar(
-        //   backgroundImage: AssetImage(
-        //     "images/profile.png"
-        //   ),
-        // )
+        PopupMenuButton(
+          icon: Icon(Icons.menu, color: Get.isDarkMode ? Colors.white:Colors.black,),
+          color: Get.isDarkMode ? Colors.white:Colors.grey[600],
+          itemBuilder: (context) => [
+            PopupMenuItem<int>(
+              value: 0,
+                child: Text(
+                  "About Us",
+                  style: TextStyle(color: Get.isDarkMode ? Colors.black:Colors.white),
+                ),
+            ),
+          ],
+          onSelected: (item) => {Get.snackbar("Developer:", "Md Eftiar Haider Khan",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: Colors.black,
+          icon: const Icon(Icons.person,
+          color: Colors.red,
+          ),
+
+          )},
+        ),
 
       ],
     );
@@ -251,52 +271,70 @@ class _HomePageState extends State<HomePage> {
 
               Task task = _taskController.taskList[index];
 
-              if(task.repeat =='Daily') {
-                DateTime date = DateFormat.jm().parse(task.startTime.toString());
-                var myTime = DateFormat("HH:mm").format(date);
-                notifyHelper.scheduledNotification(
-                  int.parse(myTime.toString().split(":")[0]),
-                  int.parse(myTime.toString().split(":")[1]),
-                  task
-                );
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                _showBottomSheet(context, _taskController.taskList[index]);
-                              },
-                              child: TaskTile(_taskController.taskList[index]),
-                            )
-                          ],
-                        ),
+              return AnimationConfiguration.staggeredList(
+                  position: index,
+                  child: SlideAnimation(
+                    child: FadeInAnimation(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              _showBottomSheet(context, _taskController.taskList[index]);
+                            },
+                            child: TaskTile(_taskController.taskList[index]),
+                          )
+                        ],
                       ),
-                    ));
-              }
+                    ),
+                  ));
 
-              if(task.date == DateFormat.yMd().format(_selectedDate)){
-                return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: (){
-                                _showBottomSheet(context, _taskController.taskList[index]);
-                              },
-                              child: TaskTile(_taskController.taskList[index]),
-                            )
-                          ],
-                        ),
-                      ),
-                    ));
-              }else{
-                return Container();
-              }
+
+              // if(task.repeat =='Daily') {
+              //   DateTime date = DateFormat.jm().parse(task.startTime.toString());
+              //   var myTime = DateFormat("HH:mm").format(date);
+              //   notifyHelper.scheduledNotification(
+              //     int.parse(myTime.toString().split(":")[0]),
+              //     int.parse(myTime.toString().split(":")[1]),
+              //     task
+              //   );
+              //   return AnimationConfiguration.staggeredList(
+              //       position: index,
+              //       child: SlideAnimation(
+              //         child: FadeInAnimation(
+              //           child: Row(
+              //             children: [
+              //               GestureDetector(
+              //                 onTap: (){
+              //                   _showBottomSheet(context, _taskController.taskList[index]);
+              //                 },
+              //                 child: TaskTile(_taskController.taskList[index]),
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ));
+              // }
+              //
+              // if(task.date == DateFormat.yMd().format(_selectedDate)){
+              //   return AnimationConfiguration.staggeredList(
+              //       position: index,
+              //       child: SlideAnimation(
+              //         child: FadeInAnimation(
+              //           child: Row(
+              //             children: [
+              //               GestureDetector(
+              //                 onTap: (){
+              //                   _showBottomSheet(context, _taskController.taskList[index]);
+              //                 },
+              //                 child: TaskTile(_taskController.taskList[index]),
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ));
+              // }else{
+              //   return Container();
+              // }
 
 
 

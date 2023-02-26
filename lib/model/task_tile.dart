@@ -43,11 +43,31 @@ class TaskTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(
+                      Icons.calendar_today_outlined,
+                      color: Colors.grey[200],
+                      size: 18,
+                    ),
+                    SizedBox(width: 4,),
+                    Text(
+                      "${task!.date}",
+                      style: GoogleFonts.lato(
+                        textStyle:
+                        TextStyle(fontSize: 13, color: Colors.grey[100]),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
                       Icons.access_time_rounded,
                       color: Colors.grey[200],
                       size: 18,
                     ),
                     SizedBox(width: 4),
+
                     Text(
                       "${task!.startTime} - ${task!.endTime}",
                       style: GoogleFonts.lato(

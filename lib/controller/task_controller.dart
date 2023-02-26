@@ -7,6 +7,7 @@ class TaskController extends GetxController{
 
   @override
   void onReady(){
+    getTasks();
     super.onReady();
 
   }

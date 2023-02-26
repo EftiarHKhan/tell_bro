@@ -46,6 +46,7 @@ dependencies:
   intl:
   google_fonts:
   date_picker_timeline:
+  sliding_clipped_nav_bar:
 
 dev_dependencies:
   flutter_test:

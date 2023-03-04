@@ -12,6 +12,7 @@ import 'package:tell_bro/model/notification_services.dart';
 import 'package:tell_bro/model/theme_services.dart';
 import 'package:tell_bro/view/add_task.dart';
 
+
 import '../model/task.dart';
 import '../model/task_tile.dart';
 import '../model/theme.dart';
@@ -44,14 +45,35 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           _addTaskBar(),
-          //_addDateBar(),
+          // Row(
+          //   children: [
+          //     _allTask(),
+          //     //_addDateBar(),
+          //   ],
+          // ),
+          _addDateBar(),
           const SizedBox(height:15),
           _showTasks(),
 
         ],
       ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => const ShowTaskPage()),
+      //     );
+      //   },
+      //   label: const Text('All Task'),
+      //   //icon: const Icon(Icons.thumb_up),
+      //   backgroundColor: primaryClr,
+      // ),
     );
   }
+
+
+
+
 
   _addDateBar(){
     return Container(
@@ -194,7 +216,7 @@ class _HomePageState extends State<HomePage> {
         height: task.isCompleted==1?
           MediaQuery.of(context).size.height*0.28:
           MediaQuery.of(context).size.height*0.36,
-          color: Get.isDarkMode?darkGreyClr:Colors.white,
+          color: Get.isDarkMode?Colors.black:Colors.white,
         child: Column(
           children: [
             Container(
@@ -288,70 +310,70 @@ class _HomePageState extends State<HomePage> {
 
               Task task = _taskController.taskList[index];
 
-              return AnimationConfiguration.staggeredList(
-                  position: index,
-                  child: SlideAnimation(
-                    child: FadeInAnimation(
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              _showBottomSheet(context, _taskController.taskList[index]);
-                            },
-                            child: TaskTile(_taskController.taskList[index]),
-                          )
-                        ],
+              // return AnimationConfiguration.staggeredList(
+              //     position: index,
+              //     child: SlideAnimation(
+              //       child: FadeInAnimation(
+              //         child: Row(
+              //           children: [
+              //             GestureDetector(
+              //               onTap: (){
+              //                 _showBottomSheet(context, _taskController.taskList[index]);
+              //               },
+              //               child: TaskTile(_taskController.taskList[index]),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //     ));
+
+
+              if(task.repeat =='Daily') {
+                DateTime date = DateFormat.jm().parse(task.startTime.toString());
+                var myTime = DateFormat("HH:mm").format(date);
+                notifyHelper.scheduledNotification(
+                  int.parse(myTime.toString().split(":")[0]),
+                  int.parse(myTime.toString().split(":")[1]),
+                  task
+                );
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                _showBottomSheet(context, _taskController.taskList[index]);
+                              },
+                              child: TaskTile(_taskController.taskList[index]),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ));
+                    ));
+              }
 
-
-              // if(task.repeat =='Daily') {
-              //   DateTime date = DateFormat.jm().parse(task.startTime.toString());
-              //   var myTime = DateFormat("HH:mm").format(date);
-              //   notifyHelper.scheduledNotification(
-              //     int.parse(myTime.toString().split(":")[0]),
-              //     int.parse(myTime.toString().split(":")[1]),
-              //     task
-              //   );
-              //   return AnimationConfiguration.staggeredList(
-              //       position: index,
-              //       child: SlideAnimation(
-              //         child: FadeInAnimation(
-              //           child: Row(
-              //             children: [
-              //               GestureDetector(
-              //                 onTap: (){
-              //                   _showBottomSheet(context, _taskController.taskList[index]);
-              //                 },
-              //                 child: TaskTile(_taskController.taskList[index]),
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ));
-              // }
-              //
-              // if(task.date == DateFormat.yMd().format(_selectedDate)){
-              //   return AnimationConfiguration.staggeredList(
-              //       position: index,
-              //       child: SlideAnimation(
-              //         child: FadeInAnimation(
-              //           child: Row(
-              //             children: [
-              //               GestureDetector(
-              //                 onTap: (){
-              //                   _showBottomSheet(context, _taskController.taskList[index]);
-              //                 },
-              //                 child: TaskTile(_taskController.taskList[index]),
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ));
-              // }else{
-              //   return Container();
-              // }
+              if(task.date == DateFormat.yMd().format(_selectedDate)){
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                _showBottomSheet(context, _taskController.taskList[index]);
+                              },
+                              child: TaskTile(_taskController.taskList[index]),
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
+              }else{
+                return Container();
+              }
 
 
 

@@ -178,11 +178,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
       ),
       actions: const [
         //Icon(Icons.person, size: 20,),
-        CircleAvatar(
-          backgroundImage: AssetImage(
-              "images/profile.png"
-          ),
-        )
+        // CircleAvatar(
+        //   backgroundImage: AssetImage(
+        //       "images/profile.png"
+        //   ),
+        // )
       ],
     );
   }

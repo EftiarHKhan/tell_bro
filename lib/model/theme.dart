@@ -6,7 +6,7 @@ const Color orangeClr = Colors.orange;
 const Color pinkClr = Color(0xFFff4667);
 const Color white = Colors.white;
 const primaryClr = orangeClr;
-const Color darkGreyClr = Colors.grey;
+const Color darkGreyClr = Colors.blue;
 const Color blackClr = Colors.black;
 
 class Themes{

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tell_bro/view/home_page.dart';
 
@@ -35,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset('images/Tell_Bro.jpg',
+            Image.asset('images/profile.png',
               width: 400,
               height: 400,
               fit: BoxFit.fill,
